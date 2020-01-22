@@ -15,9 +15,68 @@
   .headerLink {
     list-style: none;
     a {
-      padding: 6px 10px;
       color: $header_primary;
-      font-size: $font-up-1;
+    }
+  }
+}
+.profile-header-highlights {
+  a {
+    padding: 0px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    position: relative;
+    display: inline-block;
+    transition: color 0.2s linear;
+    color: #3c3f46;
+    text-align: center;
+  }
+  .headerLink:first-child {
+    a {
+      font-weight: 700;
+    }
+    a:after {
+      display: block;
+      content: "";
+      position: absolute;
+      border-bottom: 2px solid #15dad4;
+      width: 20px;
+      right: 50%;
+      bottom: -5px;
+      -webkit-transform: translateX(50%);
+      transform: translateX(50%);
+    }
+  }
+}
+
+.default-header-highlights {
+  a {
+    padding: 0px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    position: relative;
+    transition: color 0.2s linear;
+    color: #9ba1a7;
+    text-align: center;
+    min-width: max-content;
+    width: max-content;
+  }
+  a:hover {
+    color: #3c3f46;
+  }
+  .headerLink:last-child {
+    a {
+      color: #3c3f46;
+    }
+    a:after {
+      display: block;
+      content: "";
+      position: absolute;
+      border-bottom: 5px solid #15dad4;
+      width: 70%;
+      right: 50%;
+      top: -16px;
+      -webkit-transform: translateX(50%);
+      transform: translateX(50%);
     }
   }
 }
