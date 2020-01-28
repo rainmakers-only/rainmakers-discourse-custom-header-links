@@ -8,6 +8,7 @@
 
   const {
     admin,
+    custom_fields: customFields,
     custom_fields: {
       profile_type: profileType,
     } = {},
@@ -71,6 +72,8 @@
     });
   }
 
+  console.log(Discourse.User.current());
+  console.log(profileType)
   if ((admin || profileType === 'RainmakersAdmin') && adminHeaderLinks.length) {
     console.log('adminHeaderLinks');
     makeLinks(adminHeaderLinks);
