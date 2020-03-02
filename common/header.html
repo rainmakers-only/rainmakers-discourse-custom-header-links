@@ -1,4 +1,10 @@
 <script type="text/discourse-plugin" version="0.8.20">
+  const GO_TO_HOME_STATUSES = [
+    'added_video',
+    'skipped_video',
+    'admin_created',
+  ];
+
   const {
     Candidate_header_links: candidateHeaderLinks = [],
     Admin_header_links: adminHeaderLinks = [],
@@ -10,6 +16,8 @@
     admin,
     custom_fields: {
       profile_type: profileType,
+      onboarding_status: onboardingStatus,
+      application_status: applicationStatus,
     } = {},
   } = Discourse.User.current() || {};
 
@@ -72,14 +80,16 @@
   }
 
   console.log(Discourse.User.current());
-  console.log(profileType)
+
   if ((admin || profileType === 'RainmakersAdmin') && adminHeaderLinks.length) {
     console.log('adminHeaderLinks');
     makeLinks(adminHeaderLinks);
   }
   if (profileType === 'Candidate' && candidateHeaderLinks.length) {
     console.log('candidateHeaderLinks');
-    makeLinks(candidateHeaderLinks);
+    if (GO_TO_HOME_STATUSES.includes(onboardingStatus) || applicationStatus === 'approved') {
+      makeLinks(candidateHeaderLinks);
+    } 
   }
   if (profileType === 'Employee' && employeeHeaderLinks.length) {
     console.log('employeeHeaderLinks');
