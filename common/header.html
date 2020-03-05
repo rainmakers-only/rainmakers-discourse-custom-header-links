@@ -10,7 +10,18 @@
     Admin_header_links: adminHeaderLinks = [],
     Employee_header_links: employeeHeaderLinks = [],
     Default_header_links: defaultHeaderLinks = [],
+    Candidate_header_buttons: candidateHeaderButtons = [],
   } = settings;
+
+  const candidateHeaderButtons = [{
+    linkText: 'Complete Profile',
+    linkTitle: 'Click to go to Rainmakers Platform to complete your profile',
+    linkHref: 'https://client.staging.rainmakers.co',
+    deviceClass: '.headerButton',
+    linkTarget: 'self',
+    keepOnScrollClass: '.keep',
+    linkClass: '.headerButton'
+  }];
 
   const {
     admin,
@@ -79,6 +90,60 @@
     });
   }
 
+  const makeButtons = buttonsList => {
+    const headerLinks = [];
+
+    buttonsList.split("|").map(i => {
+      const seg = $.map(i.split(","), $.trim);
+      const linkText = seg[0];
+      const linkTitle = seg[1];
+      const linkHref = seg[2];
+      const deviceClass = `.${seg[3]}`;
+      const linkTarget = seg[4] === "self" ? "" : "_blank";
+      const keepOnScrollClass = seg[5] === "keep" ? ".keep" : "";
+      const linkClass = `.${linkText.trim().toLowerCase().replace(/\s/gi, '-')}`;
+
+      if (!linkTarget) {
+        headerLinks.push(
+          h(
+            `li.headerLink${deviceClass}${keepOnScrollClass}${linkClass}`,
+            h(
+              "a",
+              {
+                title: linkTitle,
+                href: linkHref
+              },
+              linkText
+            )
+          )
+        );
+      } else {
+        headerLinks.push(
+          h(
+            `li.headerLink${deviceClass}${keepOnScrollClass}${linkClass}`,
+            h(
+              "a",
+              {
+                title: linkTitle,
+                href: linkHref,
+                target: linkTarget
+              },
+              linkText
+            )
+          )
+        );
+      }
+    });
+
+    api.decorateWidget(linksPosition, helper => {
+      const addedClass = linksPosition === 'home-logo:after' ? 'default-header-highlights' : 'profile-header-highlights';
+
+      return helper.h(
+        `ul.custom-header-links.${addedClass}`, headerLinks
+      );
+    });
+  }
+
   console.log(Discourse.User.current());
 
   if ((admin || profileType === 'RainmakersAdmin') && adminHeaderLinks.length) {
@@ -89,7 +154,9 @@
     console.log('candidateHeaderLinks');
     if (GO_TO_HOME_STATUSES.includes(onboardingStatus) || applicationStatus === 'approved') {
       makeLinks(candidateHeaderLinks);
-    } 
+    } else {
+      makeButtons(candidateHeaderButtons);
+    }
   }
   if (profileType === 'Employee' && employeeHeaderLinks.length) {
     console.log('employeeHeaderLinks');
