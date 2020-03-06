@@ -10,6 +10,7 @@
     Admin_header_links: adminHeaderLinks = [],
     Employee_header_links: employeeHeaderLinks = [],
     Default_header_links: defaultHeaderLinks = [],
+    Default_header_buttons: defaultHeaderButtons = [],
     Candidate_header_buttons: candidateHeaderButtons = [],
   } = settings;
 
@@ -137,11 +138,9 @@
   console.log(Discourse.User.current());
 
   if ((admin || profileType === 'RainmakersAdmin') && adminHeaderLinks.length) {
-    console.log('adminHeaderLinks');
     makeLinks(adminHeaderLinks);
   }
   if (profileType === 'Candidate' && candidateHeaderLinks.length) {
-    console.log('candidateHeaderLinks');
     if (GO_TO_HOME_STATUSES.includes(onboardingStatus) || applicationStatus === 'approved') {
       makeLinks(candidateHeaderLinks);
     } else {
@@ -149,12 +148,11 @@
     }
   }
   if (profileType === 'Employee' && employeeHeaderLinks.length) {
-    console.log('employeeHeaderLinks');
     makeLinks(employeeHeaderLinks);
   }
 
   if (!admin && !profileType && defaultHeaderLinks.length) {
-    console.log('defaultHeaderLinks');
     makeLinks(defaultHeaderLinks);
+    makeButtons(defaultHeaderButtons);
   }
 </script>
