@@ -94,35 +94,37 @@
       const keepOnScrollClass = seg[5] === "keep" ? ".keep" : "";
       const linkClass = `.${linkText.trim().toLowerCase().replace(/\s/gi, '-')}`;
 
-      if (!linkTarget) {
-        headerLinks.push(
-          h(
-            `li.headerLink${deviceClass}${keepOnScrollClass}${linkClass}`,
+      if (linkText) {
+        if (!linkTarget) {
+          headerLinks.push(
             h(
-              "a",
-              {
-                title: linkTitle,
-                href: linkHref
-              },
-              linkText
+              `li.headerLink${deviceClass}${keepOnScrollClass}${linkClass}`,
+              h(
+                "a",
+                {
+                  title: linkTitle,
+                  href: linkHref
+                },
+                linkText
+              )
             )
-          )
-        );
-      } else {
-        headerLinks.push(
-          h(
-            `li.headerLink${deviceClass}${keepOnScrollClass}${linkClass}`,
+          );
+        } else {
+          headerLinks.push(
             h(
-              "a",
-              {
-                title: linkTitle,
-                href: linkHref,
-                target: linkTarget
-              },
-              linkText
+              `li.headerLink${deviceClass}${keepOnScrollClass}${linkClass}`,
+              h(
+                "a",
+                {
+                  title: linkTitle,
+                  href: linkHref,
+                  target: linkTarget
+                },
+                linkText
+              )
             )
-          )
-        );
+          );
+        }
       }
     });
 
